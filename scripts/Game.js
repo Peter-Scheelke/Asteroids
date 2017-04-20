@@ -592,7 +592,6 @@ let Game = (function() {
                 let asteroidCenter = {x: currentAsteroid.position.x + currentAsteroid.size.width / 2, y: currentAsteroid.position.y + currentAsteroid.size.height};
                 let distance = getDistance(shipCenter, asteroidCenter);
                 if (distance < Math.max(this.spaceship.size.width, this.spaceship.size.height) * 4 + Math.max(currentAsteroid.size.width, currentAsteroid.size.height) * 4) {
-                    console.log(distance);
                     return false;
                 }   
             }
