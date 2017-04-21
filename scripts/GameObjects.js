@@ -207,12 +207,39 @@ let GameObjects = (function() {
                 let closeAsteroids = [];
                 let position = {x: this.position.x + this.size.width / 2, y: this.position.y + this.size.height / 2};
                 for (let asteroid in Game.asteroids) {
-                    let dx = position.x - Game.asteroids[asteroid].position.x;
-                    let dy = position.y - Game.asteroids[asteroid].position.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let asteroidPositionHolder = {
+                        position: Game.asteroids[asteroid].position,
+                    }
+                    
+                    let x = null;
+                    let y = null;
+                    
+                    if (position.x < asteroidPositionHolder.position.x) {
+                        x = 0 - (BoundingBox.width - asteroidPositionHolder.position.x);
+                    }
+                    else {
+                        x = BoundingBox.width + asteroidPositionHolder.position.x;
+                    }
+                    
+                    if (position.y < asteroidPositionHolder.position.y) {
+                        y = 0 - (BoundingBox.height - asteroidPositionHolder.position.y);
+                    }
+                    else {
+                        y = BoundingBox.height + asteroidPositionHolder.position.y;
+                    }
+                    
+                    let positionHolders = [];
+                    positionHolders.push({position: {x: x, y: y}});
+                    positionHolders.push(asteroidPositionHolder);
+                    
+                    for (let i = 0; i < positionHolders.length; ++i) {
+                        let dx = position.x - positionHolders[i].position.x;
+                        let dy = position.y - positionHolders[i].position.y;
+                        let distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < Math.sqrt(BoundingBox.height * BoundingBox.height + BoundingBox.width * BoundingBox.width) / 4) {
-                        closeAsteroids.push(Game.asteroids[asteroid]);
+                        if (distance < Math.sqrt(BoundingBox.height * BoundingBox.height + BoundingBox.width * BoundingBox.width) / 5) {
+                            closeAsteroids.push(positionHolders[i]);
+                        }
                     }
                 }
 
@@ -363,12 +390,39 @@ let GameObjects = (function() {
                 let closeAsteroids = [];
                 let position = {x: this.position.x + this.size.width / 2, y: this.position.y + this.size.height / 2};
                 for (let asteroid in Game.asteroids) {
-                    let dx = position.x - Game.asteroids[asteroid].position.x;
-                    let dy = position.y - Game.asteroids[asteroid].position.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let asteroidPositionHolder = {
+                        position: Game.asteroids[asteroid].position,
+                    }
+                    
+                    let x = null;
+                    let y = null;
+                    
+                    if (position.x < asteroidPositionHolder.position.x) {
+                        x = 0 - (BoundingBox.width - asteroidPositionHolder.position.x);
+                    }
+                    else {
+                        x = BoundingBox.width + asteroidPositionHolder.position.x;
+                    }
+                    
+                    if (position.y < asteroidPositionHolder.position.y) {
+                        y = 0 - (BoundingBox.height - asteroidPositionHolder.position.y);
+                    }
+                    else {
+                        y = BoundingBox.height + asteroidPositionHolder.position.y;
+                    }
+                    
+                    let positionHolders = [];
+                    positionHolders.push({position: {x: x, y: y}});
+                    positionHolders.push(asteroidPositionHolder);
+                    
+                    for (let i = 0; i < positionHolders.length; ++i) {
+                        let dx = position.x - positionHolders[i].position.x;
+                        let dy = position.y - positionHolders[i].position.y;
+                        let distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < Math.sqrt(BoundingBox.height * BoundingBox.height + BoundingBox.width * BoundingBox.width) / 4) {
-                        closeAsteroids.push(Game.asteroids[asteroid]);
+                        if (distance < Math.sqrt(BoundingBox.height * BoundingBox.height + BoundingBox.width * BoundingBox.width) / 4) {
+                            closeAsteroids.push(positionHolders[i]);
+                        }
                     }
                 }
 

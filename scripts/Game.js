@@ -586,14 +586,23 @@ let Game = (function() {
         }
         
         that.positionIsSafe = function(position) {
+            let shipCenter = {x: this.spaceship.position.x + this.spaceship.size.width / 2, y: this.spaceship.position.y + this.spaceship.size.height};
+            
             for (let asteroid in this.asteroids) {
                 let currentAsteroid = this.asteroids[asteroid];
-                let shipCenter = {x: this.spaceship.position.x + this.spaceship.size.width / 2, y: this.spaceship.position.y + this.spaceship.size.height};
                 let asteroidCenter = {x: currentAsteroid.position.x + currentAsteroid.size.width / 2, y: currentAsteroid.position.y + currentAsteroid.size.height};
                 let distance = getDistance(shipCenter, asteroidCenter);
                 if (distance < Math.max(this.spaceship.size.width, this.spaceship.size.height) * 4 + Math.max(currentAsteroid.size.width, currentAsteroid.size.height) * 4) {
                     return false;
                 }   
+            }
+            
+            if (this.saucer != null && this.saucer.isAlive) {
+                let saucerCenter = {x: this.saucer.position.x + this.saucer.size.width / 2, y: this.saucer.position.y + this.saucer.size.height};
+                let distance = getDistance(saucerCenter, shipCenter);
+                if (distance < Math.max(this.spaceship.size.width, this.spaceship.size.height) * 4 + Math.max(this.saucer.size.width, this.saucer.size.height) * 4) {
+                    return false;
+                }
             }
             
             return true;
