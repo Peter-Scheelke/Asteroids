@@ -6,9 +6,9 @@ let renderOffset = {x: 100, y: 100};
 
 let gameFontStyle = 'Arial';
 
-let storeScore = function(score) {
+let storeScore = function(score, level) {
     $.ajax({
-		url: 'http://localhost:8080/v1/high-scores?score=' + score,
+		url: `http://localhost:8080/v1/high-scores?score=${score}&level=${level}`,
 		type: 'POST',
 	});
 }
@@ -22,7 +22,7 @@ let getHighScores = function() {
         success: function(result) {
             highscores.length = 0;
             for (let score in result) {
-                highscores.push(`${result[score].date}: ${result[score].points}`);
+                highscores.push(`${result[score].date}: ${result[score].points} (${result[score].level})`);
             }
         },
         

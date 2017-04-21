@@ -594,7 +594,7 @@ let SpecificMenus = (function() {
                         GameMenu.returnFromMenu();
                         if (!Game.hasStoredScore) {
                             Game.hasStoredScore = true;
-                            storeScore(Game.score);
+                            storeScore(Game.score, Game.currentLevel);
                         }
                     },
                     

@@ -48,7 +48,7 @@ let GameLoop = (function() {
             for (let i = 0; i < Game.lives; ++i) {
                 
                 let spec = {
-                    center: {x: 10 * i + i * 20, y: -40},
+                    center: {x: 10 + 10 * i + i * 20, y: -40},
                     rotation: 0,
                     size: {width: 20, height: 30},
                     image: ImagePool.spaceshipImage,
@@ -101,7 +101,7 @@ let GameLoop = (function() {
     let renderHyperjumpBar = function() {
         let percentage = Game.getHyperjumpCharge();
         let position = {x: 0, y: -1 * BoundingBox.height / 100 - 5};
-        let size = {width: BoundingBox.width / 15, height: BoundingBox.height / 100};
+        let size = {width: BoundingBox.width / 12, height: BoundingBox.height / 100};
         Graphics.drawRectangle(position, size, '#8C8C8C');
         size.width *= percentage;
         Graphics.drawRectangle(position, size, '#FFFFFF');

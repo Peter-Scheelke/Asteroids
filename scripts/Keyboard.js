@@ -6,7 +6,7 @@ let Keyboard = (function() {
         
         let code = numericToCodeMap[e.keyCode];
         if (code == 'DOM_VK_UP' || code == 'DOM_VK_DOWN' || code == 'DOM_VK_LEFT' || code == 'DOM_VK_RIGHT' || code == 'DOM_VK_SPACE' || code == 'DOM_VK_END' || code == 'DOM_VK_HOME' || code == 'DOM_VK_PAGE_UP' || code == 'DOM_VK_PAGE_DOWN') {
-            event.preventDefault();
+            e.preventDefault();
             return false;
         }
     }

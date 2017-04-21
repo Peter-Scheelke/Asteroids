@@ -30,14 +30,15 @@ exports.add = function(request, response) {
         let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         
         if (Highscores.length < 10) {
-            Highscores.push({points : request.query.score, date : date});
+            Highscores.push({points : request.query.score, date : date, level: request.query.level});
             Highscores.sort(sortNumbers);
         }
         else {
             Highscores.sort(sortNumbers);
             if (parseInt(request.query.score) > (Highscores[9].points)) {
-                Highscores[9] = {points : request.query.score, date : date};
+                Highscores[9] = {points : request.query.score, date : date, level: request.query.level};
             }
+            
             Highscores.sort(sortNumbers);
         }
 

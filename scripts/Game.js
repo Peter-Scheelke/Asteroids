@@ -21,7 +21,7 @@ let Game = (function() {
         that.spaceship = null;
         that.score = 0;
         that.lives = 0;
-        that.clearedCount = 0;
+        that.currentLevel = 1;
         that.asteroidCount = 0;
         
         let createRandomAsteroid = function() {
@@ -38,6 +38,7 @@ let Game = (function() {
         }
         
         that.initialize = function(score = 0, lives = 0, isAlive = false, asteroidCount = 0) {
+            this.currentLevel = 1;
             this.hasStoredScore = false;
             Explosions.clear();
             timeSinceSpaceShipDied = 3000;
@@ -159,7 +160,7 @@ let Game = (function() {
 
                 if (this.lives == 0 && !this.hasStoredScore) {
                     this.hasStoredScore = true;
-                    storeScore(this.score);
+                    storeScore(this.score, this.currentLevel);
                 }
                 
                 if (this.spaceship != null) {
@@ -228,6 +229,7 @@ let Game = (function() {
                 this.checkShipAndSaucerCollisions();
                 
                 if (this.asteroids.length == 0) {
+                    this.currentLevel += 1;
                     for (let i = 0; i < this.asteroidCount + 1; ++i) {
                         let position = {x: this.spaceship.position.x - this.spaceship.size.width * 2, y: this.spaceship.position.y - this.spaceship.size.height * 2};
                         let size = {width: this.spaceship.size.width * 6, height: this.spaceship.size.height * 6};
@@ -291,9 +293,15 @@ let Game = (function() {
         }
         
         that.renderScore = function() {
+            let fontSize = 24;
             let text = `Score: ${this.score}`;
-            let width = Graphics.getTextWidth(text, 24, gameFontStyle);
-            Graphics.writeText(text, {x: BoundingBox.width - width, y: -20}, 24, gameFontStyle, '#FFFFFF');
+            let width = Graphics.getTextWidth(text, fontSize, gameFontStyle);
+            Graphics.writeText(text, {x: BoundingBox.width - width, y: -25}, fontSize, gameFontStyle, '#FFFFFF');
+            
+            text = `Level: ${this.currentLevel}`;
+            fontSize = 20;
+            width = Graphics.getTextWidth(text, fontSize, gameFontStyle);
+            Graphics.writeText(text, {x: BoundingBox.width - width, y: -5}, fontSize, gameFontStyle, '#FFFFFF');
         }
         
         that.fire = function() {
@@ -592,7 +600,7 @@ let Game = (function() {
                 let currentAsteroid = this.asteroids[asteroid];
                 let asteroidCenter = {x: currentAsteroid.position.x + currentAsteroid.size.width / 2, y: currentAsteroid.position.y + currentAsteroid.size.height};
                 let distance = getDistance(shipCenter, asteroidCenter);
-                if (distance < Math.max(this.spaceship.size.width, this.spaceship.size.height) * 4 + Math.max(currentAsteroid.size.width, currentAsteroid.size.height) * 4) {
+                if (distance < Math.max(this.spaceship.size.width, this.spaceship.size.height) * 6 + Math.max(currentAsteroid.size.width, currentAsteroid.size.height) * 6) {
                     return false;
                 }   
             }
